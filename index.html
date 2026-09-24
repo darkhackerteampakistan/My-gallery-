@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>আমার ভিডিও</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f3f4f6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #111;
+    }
+    #player {
+      display: none;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    #player video {
+      width: 100%;
+      display: block;
+    }
+    #player p {
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 14px;
+      background: #111;
+    }
+    .list {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-size: 16px;
+    }
+    .item:last-child { border-bottom: none; }
+    .item:hover { background: #eff6ff; }
+    .item.active { background: #dbeafe; }
+    .icon { font-size: 20px; }
+    .name { flex: 1; color: #111; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📹 আমার ভিডিও</h1>
+
+    <div id="player">
+      <video id="video" controls controlsList="nodownload" oncontextmenu="return false" autoplay></video>
+      <p id="title"></p>
+    </div>
+
+    <div class="list" id="list"></div>
+  </div>
+
+  <script>
+    // ⬇️ এখানে আপনার ভিডিও ফাইলের নামগুলো লিখুন
+    const videos = [
+      "lv_7358738912958876944_20260912142815.mp4"
+      "lv_7488758995218484533_20260911161330.mp4",
+      "lv_7619040225540541697_20260911160251.mp4",
+      "lv_7673688330004942097_20260910214313.mp4"
+    ];
+
+    const listEl = document.getElementById('list');
+    const playerEl = document.getElementById('player');
+    const videoEl = document.getElementById('video');
+    const titleEl = document.getElementById('title');
+
+    videos.forEach((name) => {
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML = `<span class="icon">🎬</span><span class="name">${name}</span>`;
+      div.onclick = () => playVideo(name, div);
+      listEl.appendChild(div);
+    });
+
+    function playVideo(name, el) {
+      document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+
+      playerEl.style.display = 'block';
+      videoEl.src = 'videos/' + name;
+      titleEl.textContent = name;
+      videoEl.play();
+    }
+  </script>
+</body>
+</html>
